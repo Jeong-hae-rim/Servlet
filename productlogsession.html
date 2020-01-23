@@ -57,18 +57,18 @@ function product(p) {
 			request.onload = function(event) {
 			if (request.status == 200) {
 				var str = request.responseText;
-				var Json = JSON.parse(str);
+				var json = JSON.parse(str);
 				target.innerHTML = 
 					"<h2>선택한 상품 리스트</h2><hr>";
-					console.log(Object.keys(jsonObj)[0]);
-	 				for (var i =0;i<Object.keys(jsonObj).length; i ++)
-	 					if(Object.keys(jsonObj)[0]=='msg') {
-	 						target.innerHTML+="<h3>"+jsonObj[Object.keys(jsonObj)[i]]+"</h3>";
+					console.log(Object.keys(json)[0]);
+	 				for (var i =0;i<Object.keys(json).length; i ++)
+	 					if(Object.keys(json)[0]=='메세지') {
+	 						target.innerHTML+="<h3>"+json[Object.keys(json)[i]]+"</h3>";
 	 						console.log("1");
 	 						break;
 	 					}
 	 					else 
-	 						target.innerHTML+="<h3>"+Object.keys(jsonObj)[i] +" 상품 " + jsonObj[Object.keys(jsonObj)[i]] + "개</h3>";
+	 						target.innerHTML+="<h3>"+Object.keys(json)[i] +" 상품 " + json[Object.keys(json)[i]] + "개</h3>";
 	 	
 	 			}
 			}

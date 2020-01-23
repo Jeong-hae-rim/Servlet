@@ -26,22 +26,23 @@ public class BasketServlet2 extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		System.out.print("1");
 		response.setContentType("text/json; charset=UTF-8");
 		PrintWriter out = response.getWriter();
 		HttpSession session = request.getSession();
 		if (session.getAttribute("productcnt") == null)
 			session.setAttribute("productcnt", new int[11]);
 
-		int id = Integer.parseInt(request.getParameter("pid"));
+		int id = Integer.parseInt(request.getParameter("pid").replaceAll("[^0-9]",""));
 		
 			if(id == 0) {
 				session.invalidate();
-				String str = "{\"메세지 \" : \"상품이 모두 삭제되었습니다.\"}";
+				String str = "{\"메세지\" : \"상품이 모두 삭제되었습니다.\"}";
 				System.out.println(str);
 				out.println(str);
 			} else {
 				String pid = String.format("{\"pid\":\"%s\"}", id);
-				int[] session_p = (int[]) session.getAttribute("products");
+				int[] session_p = (int[]) session.getAttribute("productcnt");
 				session_p[id] += 1;
 				
 
@@ -76,7 +77,7 @@ public class BasketServlet2 extends HttpServlet {
 			String str = "{";
 			for (int i = 1 ; i<11; i++) {
 				if(session_p[i]==0) continue;
-				str += "\"p" + String.format("{\"pid\":\"%s\"}", id) + "\" : " + session_p[i];
+				str +=  String.format("\"p%03d\" : %s", i, session_p[i]);
 				str += ",";
 			}
 			str = str.substring(0, str.length()-1);
